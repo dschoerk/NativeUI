@@ -6,7 +6,9 @@ using System.Windows.Forms;
 using GTA;
 using GTA.Native;
 using Control = GTA.Control;
-using Font = GTA.Font;
+using Font = GTA.UI.Font;
+using UIContainer = GTA.UI.Container;
+using GTA.UI;
 
 namespace NativeUI
 {
@@ -166,35 +168,35 @@ namespace NativeUI
             Children = new Dictionary<UIMenuItem, UIMenu>();
             WidthOffset = 0;
 
-            _instructionalButtonsScaleform = new Scaleform(0);
-            _instructionalButtonsScaleform.Load("instructional_buttons");
+            _instructionalButtonsScaleform = new Scaleform("instructional_buttons");
+            // TODO _instructionalButtonsScaleform.Load();
             UpdateScaleform();
 
             _mainMenu = new UIContainer(new Point(0, 0), new Size(700, 500), Color.FromArgb(0, 0, 0, 0));
-            _logo = new Sprite(spriteLibrary, spriteName, new Point(0 + _offset.X, 0 + _offset.Y), new Size(431, 107));
-            _mainMenu.Items.Add(Title = new UIResText(title, new Point(215 + _offset.X, 20 + _offset.Y), 1.15f, Color.White, Font.HouseScript, UIResText.Alignment.Centered));
+            _logo = new Sprite(spriteLibrary, spriteName, new Size(431, 107), new Point(0 + _offset.X, 0 + _offset.Y));
+            _mainMenu.Items.Add(Title = new UIResText(title, new Point(215 + _offset.X, 20 + _offset.Y), 1.15f, Color.White, Font.HouseScript, Alignment.Center));
             if (!String.IsNullOrWhiteSpace(subtitle))
             {
                 _mainMenu.Items.Add(new UIResRectangle(new Point(0 + offset.X, 107 + _offset.Y), new Size(431, 37), Color.Black));
-                _mainMenu.Items.Add(Subtitle = new UIResText(subtitle, new Point(8 + _offset.X, 110 + _offset.Y), 0.35f, Color.WhiteSmoke, 0, UIResText.Alignment.Left));
+                _mainMenu.Items.Add(Subtitle = new UIResText(subtitle, new Point(8 + _offset.X, 110 + _offset.Y), 0.35f, Color.WhiteSmoke, 0, Alignment.Center));
 
                 if (subtitle.StartsWith("~"))
                 {
                     CounterPretext = subtitle.Substring(0, 3);
                 }
-                _counterText = new UIResText("", new Point(425 + _offset.X, 110 + _offset.Y), 0.35f, Color.WhiteSmoke, 0, UIResText.Alignment.Right);
+                _counterText = new UIResText("", new Point(425 + _offset.X, 110 + _offset.Y), 0.35f, Color.WhiteSmoke, 0, Alignment.Right);
                 _extraYOffset = 37;
             }
 
-            _upAndDownSprite = new Sprite("commonmenu", "shop_arrows_upanddown", new Point(190 + _offset.X, 147 + 37 * (MaxItemsOnScreen + 1) + _offset.Y - 37 + _extraYOffset), new Size(50, 50));
+            _upAndDownSprite = new Sprite("commonmenu", "shop_arrows_upanddown", new Size(50, 50), new Point(190 + _offset.X, 147 + 37 * (MaxItemsOnScreen + 1) + _offset.Y - 37 + _extraYOffset));
             _extraRectangleUp = new UIResRectangle(new Point(0 + _offset.X, 144 + 38 * (MaxItemsOnScreen + 1) + _offset.Y - 37 + _extraYOffset), new Size(431, 18), Color.FromArgb(200, 0, 0, 0));
             _extraRectangleDown = new UIResRectangle(new Point(0 + _offset.X, 144 + 18 + 38 * (MaxItemsOnScreen + 1) + _offset.Y - 37 + _extraYOffset), new Size(431, 18), Color.FromArgb(200, 0, 0, 0));
 
             _descriptionBar = new UIResRectangle(new Point(_offset.X, 123), new Size(431, 4), Color.Black);
-            _descriptionRectangle = new Sprite("commonmenu", "gradient_bgd", new Point(_offset.X, 127), new Size(431, 30));
-            _descriptionText = new UIResText("Description", new Point(_offset.X + 5, 125), 0.35f, Color.FromArgb(255, 255, 255, 255), Font.ChaletLondon, UIResText.Alignment.Left);
+            _descriptionRectangle = new Sprite("commonmenu", "gradient_bgd", new Size(431, 30), new Point(_offset.X, 127));
+            _descriptionText = new UIResText("Description", new Point(_offset.X + 5, 125), 0.35f, Color.FromArgb(255, 255, 255, 255), Font.ChaletLondon, Alignment.Left);
 
-            _background = new Sprite("commonmenu", "gradient_bgd", new Point(_offset.X, 144 + _offset.Y - 37 + _extraYOffset), new Size(290, 25));
+            _background = new Sprite("commonmenu", "gradient_bgd", new Size(290, 25), new Point(_offset.X, 144 + _offset.Y - 37 + _extraYOffset));
 
             
             SetKey(MenuControls.Up, Control.PhoneUp);
@@ -226,9 +228,9 @@ namespace NativeUI
             if (count > MaxItemsOnScreen + 1)
                 count = MaxItemsOnScreen + 2;
 
-            _descriptionBar.Position = new Point(_offset.X, 38*count + _descriptionBar.Position.Y);
-            _descriptionRectangle.Position = new Point(_offset.X, 38*count + _descriptionRectangle.Position.Y);
-            _descriptionText.Position = new Point(_offset.X + 8, 38*count + _descriptionText.Position.Y);
+            _descriptionBar.Position = new PointF(_offset.X, 38*count + _descriptionBar.Position.Y);
+            _descriptionRectangle.Position = new PointF(_offset.X, 38*count + _descriptionRectangle.Position.Y);
+            _descriptionText.Position = new PointF(_offset.X + 8, 38*count + _descriptionText.Position.Y);
         }
 
 
@@ -444,9 +446,9 @@ namespace NativeUI
             if(ControlDisablingEnabled)
                 DisEnableControls(false);
 
-            if(_buttonsEnabled)
-                Function.Call(Hash._0x0DF606929C105BE1, _instructionalButtonsScaleform.Handle, 255, 255, 255, 255, 0);
-                // _instructionalButtonsScaleform.Render2D(); // Bug #13
+            // TODO if(_buttonsEnabled)
+            // TODO Function.Call(Hash._0x0DF606929C105BE1, _instructionalButtonsScaleform.Handle, 255, 255, 255, 255, 0);
+            // _instructionalButtonsScaleform.Render2D(); // Bug #13
 
 
             Point safe = GetSafezoneBounds();
@@ -472,12 +474,12 @@ namespace NativeUI
             }
             else
             {
-                Sprite.DrawTexture(_customBanner, new Point(safe.X + _offset.X, safe.Y + _offset.Y), new Size(431 + WidthOffset, 107));
+                //Sprite.DrawTexture(_customBanner, new Point(safe.X + _offset.X, safe.Y + _offset.Y), new Size(431 + WidthOffset, 107));
             }
             _mainMenu.Draw();
             if (MenuItems.Count == 0)
             {
-                Function.Call(Hash._0xE3A3DB414A373DAB);  //Function.Call((Hash)0xE3A3DB414A373DAB); // Safezone end
+                // TODO Function.Call(Hash._0xE3A3DB414A373DAB);  //Function.Call((Hash)0xE3A3DB414A373DAB); // Safezone end
                 return;
             }
 
@@ -543,8 +545,8 @@ namespace NativeUI
                 //}
             }
 
-            if (ScaleWithSafezone)
-                Function.Call(Hash._0xE3A3DB414A373DAB); // Function.Call((Hash)0xE3A3DB414A373DAB); // Safezone end
+            // TODO if (ScaleWithSafezone)
+            // TODO Function.Call(Hash._0xE3A3DB414A373DAB); // Function.Call((Hash)0xE3A3DB414A373DAB); // Safezone end
         }
 
         /// <summary>
@@ -553,8 +555,8 @@ namespace NativeUI
         /// <returns></returns>
         public static SizeF GetScreenResolutionMaintainRatio()
         {
-            int screenw = Game.ScreenResolution.Width;
-            int screenh = Game.ScreenResolution.Height;
+            float screenw = GTA.UI.Screen.Width;
+            float screenh = GTA.UI.Screen.Height;
             const float height = 1080f;
             float ratio = (float)screenw / screenh;
             var width = height * ratio;
@@ -601,7 +603,7 @@ namespace NativeUI
         public int IsMouseInListItemArrows(UIMenuListItem item, Point topLeft, Point safezone) // TODO: Ability to scroll left and right
         {
             Function.Call((Hash)0x54CE8AC98E120CAB, "jamyfafi");
-            UIResText.AddLongString(item.Text);
+            // TODO UIResText.AddLongString(item.Text);
             var res = GetScreenResolutionMaintainRatio();
             var screenw = res.Width;
             var screenh = res.Height;
@@ -631,8 +633,8 @@ namespace NativeUI
             g = 10 - g;
 
             const float hmp = 5.4f;
-            int screenw = Game.ScreenResolution.Width;
-            int screenh = Game.ScreenResolution.Height;
+            float screenw = GTA.UI.Screen.Width;
+            float screenh = GTA.UI.Screen.Height;
             float ratio = (float)screenw / screenh;
             float wmp = ratio*hmp;
             
@@ -873,16 +875,16 @@ namespace NativeUI
             if (IsMouseInBounds(new Point(0, 0), new Size(30, 1080)) && MouseEdgeEnabled)
             {
                 GameplayCamera.RelativeHeading += 5f;
-                Function.Call(Hash._0x8DB8CFFD58B62552, 6);
+                Function.Call(Hash._SET_CURSOR_SPRITE, 6);
             }
             else if (IsMouseInBounds(new Point(Convert.ToInt32(GetScreenResolutionMaintainRatio().Width - 30f), 0), new Size(30, 1080)) &&  MouseEdgeEnabled)
             {
                 GameplayCamera.RelativeHeading -= 5f;
-                Function.Call(Hash._0x8DB8CFFD58B62552, 7);
+                Function.Call(Hash._SET_CURSOR_SPRITE, 7);
             }
             else if(MouseEdgeEnabled)
             {
-                Function.Call(Hash._0x8DB8CFFD58B62552, 1);
+                Function.Call(Hash._SET_CURSOR_SPRITE, 1);
             }
 
             for (int i = _minItem; i <= limit; i++)
@@ -1230,10 +1232,10 @@ namespace NativeUI
             _instructionalButtonsScaleform.CallFunction("CLEAR_ALL");
             _instructionalButtonsScaleform.CallFunction("TOGGLE_MOUSE_BUTTONS", 0);
             _instructionalButtonsScaleform.CallFunction("CREATE_CONTAINER");
-            
 
-            _instructionalButtonsScaleform.CallFunction("SET_DATA_SLOT", 0, Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)Control.PhoneSelect, 0), "Select");
-            _instructionalButtonsScaleform.CallFunction("SET_DATA_SLOT", 1, Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)Control.PhoneCancel, 0), "Back");
+
+            // TODO _instructionalButtonsScaleform.CallFunction("SET_DATA_SLOT", 0, Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)Control.PhoneSelect, 0), "Select");
+            // TODO  _instructionalButtonsScaleform.CallFunction("SET_DATA_SLOT", 1, Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)Control.PhoneCancel, 0), "Back");
             int count = 2;
             foreach (var button in _instructionalButtons.Where(button => button.ItemBind == null || MenuItems[CurrentSelection] == button.ItemBind))
             {
@@ -1257,8 +1259,8 @@ namespace NativeUI
                 UpdateScaleform();
                 if (ParentMenu != null || !value) return;
                 if (!ResetCursorOnOpen) return;
-                Cursor.Position = new Point(Screen.PrimaryScreen.Bounds.Width/2, Screen.PrimaryScreen.Bounds.Height/2);
-                Function.Call(Hash._0x8DB8CFFD58B62552, 1);
+                Cursor.Position = new Point((int)GTA.UI.Screen.Width/2, (int)GTA.UI.Screen.Height/2);
+                Function.Call(Hash._SET_CURSOR_SPRITE, 1);
             }
         }
 
@@ -1290,7 +1292,7 @@ namespace NativeUI
         /// <summary>
         /// Returns false if last input was made with mouse and keyboard, true if it was made with a controller.
         /// </summary>
-        public static bool IsUsingController => !Function.Call<bool>(Hash._GET_LAST_INPUT_METHOD, 2);
+        public static bool IsUsingController => Game.CurrentInputMode == InputMode.MouseAndKeyboard;
 
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using GTA.UI;
 
 namespace NativeUI
 {                
@@ -41,14 +42,14 @@ namespace NativeUI
             Enabled = true;
 
             _rectangle = new UIResRectangle(new Point(0, 0), new Size(431, 38), Color.FromArgb(20, 255, 255, 255)); // Color.FromArgb(150, 0, 0, 0)
-            _text = new UIResText(text, new Point(8, 0), 0.33f, Color.WhiteSmoke, GTA.Font.ChaletLondon, UIResText.Alignment.Left);
+            _text = new UIResText(text, new Point(8, 0), 0.33f, Color.WhiteSmoke, GTA.UI.Font.ChaletLondon, Alignment.Center);
             Description = description;
-            _selectedSprite = new Sprite("commonmenu", "gradient_nav", new Point(0, 0), new Size(431, 38));
+            _selectedSprite = new Sprite("commonmenu", "gradient_nav", new Size(431, 38), new Point(0, 0));
 
-            _badgeLeft = new Sprite("commonmenu", "", new Point(0, 0), new Size(40, 40));
-            _badgeRight = new Sprite("commonmenu", "", new Point(0, 0), new Size(40, 40));
+            _badgeLeft = new Sprite("commonmenu", "", new Size(40, 40), new Point(0, 0));
+            _badgeRight = new Sprite("commonmenu", "", new Size(40, 40), new Point(0, 0));
 
-            _labelText = new UIResText("", new Point(0, 0), 0.35f) {TextAlignment = UIResText.Alignment.Right};
+            _labelText = new UIResText("", new Point(0, 0), 0.35f) {Alignment = Alignment.Right};
         }
 
 
@@ -119,29 +120,29 @@ namespace NativeUI
 
             if (LeftBadge == BadgeStyle.None)
             {
-                _text.Position = new Point(8 + Offset.X, _text.Position.Y);
+                _text.Position = new PointF(8 + Offset.X, _text.Position.Y);
             }
             else
             {
-                _text.Position = new Point(35 + Offset.X, _text.Position.Y);
-                _badgeLeft.TextureDict = BadgeToSpriteLib(LeftBadge);
-                _badgeLeft.TextureName = BadgeToSpriteName(LeftBadge, Selected);
+                _text.Position = new PointF(35 + Offset.X, _text.Position.Y);
+                // TODO _badgeLeft.TextureDict = BadgeToSpriteLib(LeftBadge);
+                // TODO _badgeLeft.TextureName = BadgeToSpriteName(LeftBadge, Selected);
                 _badgeLeft.Color = BadgeToColor(LeftBadge, Selected);
                 _badgeLeft.Draw();
             }
 
             if (RightBadge != BadgeStyle.None)
             {
-                _badgeRight.Position = new Point(385 + Offset.X + Parent.WidthOffset, _badgeRight.Position.Y);
-                _badgeRight.TextureDict = BadgeToSpriteLib(RightBadge);
-                _badgeRight.TextureName = BadgeToSpriteName(RightBadge, Selected);
+                _badgeRight.Position = new PointF(385 + Offset.X + Parent.WidthOffset, _badgeRight.Position.Y);
+                // TODO _badgeRight.TextureDict = BadgeToSpriteLib(RightBadge);
+                // TODO _badgeRight.TextureName = BadgeToSpriteName(RightBadge, Selected);
                 _badgeRight.Color = BadgeToColor(RightBadge, Selected);
                 _badgeRight.Draw();
             }
 
             if (!String.IsNullOrWhiteSpace(RightLabel))
             {
-                _labelText.Position = new Point(420 + Offset.X + Parent.WidthOffset, _labelText.Position.Y);
+                _labelText.Position = new PointF(420 + Offset.X + Parent.WidthOffset, _labelText.Position.Y);
                 _labelText.Caption = RightLabel;
                 _labelText.Color = _text.Color = Enabled ? (Selected ? Color.Black : Color.WhiteSmoke) : _disabledColor; // No alloc anymore there
                 _labelText.Draw();

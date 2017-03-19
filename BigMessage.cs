@@ -19,8 +19,8 @@ namespace NativeUI
         public void Load()
         {
             if (_sc != null) return;
-            _sc = new Scaleform(0);
-            _sc.Load("MP_BIG_MESSAGE_FREEMODE");
+            _sc = new Scaleform("MP_BIG_MESSAGE_FREEMODE");
+            // TODO _sc.Load();
             var timeout = 1000;
             var start = DateTime.Now;
             while (!Function.Call<bool>(Hash.HAS_SCALEFORM_MOVIE_LOADED, _sc.Handle) && DateTime.Now.Subtract(start).TotalMilliseconds < timeout) Script.Yield();

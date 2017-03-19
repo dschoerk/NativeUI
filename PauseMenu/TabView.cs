@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using GTA;
 using GTA.Native;
-using Font = GTA.Font;
+using Font = GTA.UI.Font;
+using GTA.UI;
 
 namespace NativeUI.PauseMenu
 {
@@ -63,7 +64,7 @@ namespace NativeUI.PauseMenu
         private Scaleform _sc;
         public void ShowInstructionalButtons()
         {
-            if (_sc == null)
+            /*if (_sc == null)
             {
                 _sc = new Scaleform(0);
                 _sc.Load("instructional_buttons");
@@ -78,12 +79,14 @@ namespace NativeUI.PauseMenu
             _sc.CallFunction("SET_DATA_SLOT", 1, Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)Control.PhoneCancel, 0), "Back");
 
             _sc.CallFunction("SET_DATA_SLOT", 2, Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)Control.FrontendRb, 0), "");
-            _sc.CallFunction("SET_DATA_SLOT", 3, Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)Control.FrontendLb, 0), "Browse");
+            _sc.CallFunction("SET_DATA_SLOT", 3, Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)Control.FrontendLb, 0), "Browse");*/
+
+            // TODO
         }
 
         public void DrawInstructionalButton(int slot, Control control, string text)
         {
-            _sc.CallFunction("SET_DATA_SLOT", slot, Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)control, 0), text);
+            // TODO _sc.CallFunction("SET_DATA_SLOT", slot, Function.Call<string>(Hash._0x0499D7B09FC9B407, 2, (int)control, 0), text);
         }
 
         public void ProcessControls()
@@ -217,15 +220,15 @@ namespace NativeUI.PauseMenu
             if (!HideTabs)
             {
                 new UIResText(Title, new Point(safe.X, safe.Y - 80), 1f, Color.White, Font.ChaletComprimeCologne,
-                    UIResText.Alignment.Left)
+                    Alignment.Left)
                 {
                     DropShadow = true,
                 }.Draw();
 
                 if (Photo == null)
                 {
-                    new Sprite("char_multiplayer", "char_multiplayer",
-                        new Point((int)res.Width - safe.X - 64, safe.Y - 80), new Size(64, 64)).Draw();
+                    new Sprite("char_multiplayer", "char_multiplayer", new Size(64, 64),
+                        new Point((int)res.Width - safe.X - 64, safe.Y - 80) ).Draw();
                 }
                 else
                 {
@@ -235,7 +238,7 @@ namespace NativeUI.PauseMenu
                 }
 
                 new UIResText(Name, new Point((int)res.Width - safe.X - 70, safe.Y - 95), 0.7f, Color.White,
-                    Font.ChaletComprimeCologne, UIResText.Alignment.Right)
+                    Font.ChaletComprimeCologne, Alignment.Right)
                 {
                     DropShadow = true,
                 }.Draw();
@@ -248,7 +251,7 @@ namespace NativeUI.PauseMenu
 
 
                 new UIResText(t, new Point((int)res.Width - safe.X - 70, safe.Y - 60), 0.4f, Color.White,
-                    Font.ChaletComprimeCologne, UIResText.Alignment.Right)
+                    Font.ChaletComprimeCologne, Alignment.Right)
                 {
                     DropShadow = true,
                 }.Draw();
@@ -260,7 +263,7 @@ namespace NativeUI.PauseMenu
                 }
 
                 new UIResText(subt, new Point((int)res.Width - safe.X - 70, safe.Y - 40), 0.4f, Color.White,
-                    Font.ChaletComprimeCologne, UIResText.Alignment.Right)
+                    Font.ChaletComprimeCologne, Alignment.Right)
                 {
                     DropShadow = true,
                 }.Draw();
@@ -271,8 +274,8 @@ namespace NativeUI.PauseMenu
                     activeSize -= 4 * 5;
                     int tabWidth = (int)activeSize / Tabs.Count;
 
-                    Game.EnableControl(0, Control.CursorX);
-                    Game.EnableControl(0, Control.CursorY);
+                    Game.EnableControlThisFrame(0, Control.CursorX);
+                    Game.EnableControlThisFrame(0, Control.CursorY);
 
                     var hovering = UIMenu.IsMouseInBounds(safe.AddPoints(new Point((tabWidth + 5) * i, 0)),
                         new Size(tabWidth, 40));
@@ -285,7 +288,7 @@ namespace NativeUI.PauseMenu
 
                     new UIResText(Tabs[i].Title.ToUpper(), safe.AddPoints(new Point((tabWidth / 2) + (tabWidth + 5) * i, 5)),
                         0.35f,
-                        Tabs[i].Active ? Color.Black : Color.White, Font.ChaletLondon, UIResText.Alignment.Centered)
+                        Tabs[i].Active ? Color.Black : Color.White, Font.ChaletLondon, Alignment.Center)
                         .Draw();
 
                     if (Tabs[i].Active)

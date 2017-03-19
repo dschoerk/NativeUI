@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using Control = GTA.Control;
+using GTA.UI;
 
 namespace NativeUI
 {

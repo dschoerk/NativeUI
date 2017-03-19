@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using GTA;
 using GTA.Native;
+using UIRectangle = GTA.UI.Rectangle;
 
 namespace NativeUI
 {
@@ -18,11 +19,11 @@ namespace NativeUI
         public UIResRectangle(Point pos, Size size, Color color) : base(pos, size, color)
         { }
         
-        public override void Draw(Size offset)
+        public override void Draw(SizeF offset)
         {
             if (!Enabled) return;
-            int screenw = Game.ScreenResolution.Width;
-            int screenh = Game.ScreenResolution.Height;
+            float screenw = GTA.UI.Screen.Width;
+            float screenh = GTA.UI.Screen.Height;
             const float height = 1080f;
             float ratio = (float)screenw / screenh;
             var width = height * ratio;

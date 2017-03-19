@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Drawing;
-
+using GTA.UI;
 namespace NativeUI.PauseMenu
 {
     public class TabItem
     {
         public TabItem(string name)
         {
-            RockstarTile = new Sprite("pause_menu_sp_content", "rockstartilebmp", new Point(), new Size(64, 64), 0f, Color.FromArgb(40, 255, 255, 255));
+            RockstarTile = new Sprite("pause_menu_sp_content", "rockstartilebmp", new Size(64, 64), new Point(), Color.FromArgb(40, 255, 255, 255));
             Title = name;
             DrawBg = true;
             UseDynamicPositionment = true;

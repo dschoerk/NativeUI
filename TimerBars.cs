@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using GTA;
-using Font = GTA.Font;
+using Font = GTA.UI.Font;
+using GTA.UI;
 
 namespace NativeUI
 {
@@ -19,12 +20,13 @@ namespace NativeUI
             SizeF res = UIMenu.GetScreenResolutionMaintainRatio();
             Point safe = UIMenu.GetSafezoneBounds();
 
-            new UIResText(Label, new Point((int)res.Width - safe.X - 180, (int)res.Height - safe.Y - (30 + (4 * interval))), 0.3f, Color.White, Font.ChaletLondon, UIResText.Alignment.Right).Draw();
-            new Sprite("timerbars", "all_black_bg", new Point((int)res.Width - safe.X - 298, (int)res.Height - safe.Y - (40 + (4 * interval))), new Size(300, 37), 0f, Color.FromArgb(180, 255, 255, 255)).Draw();
+            new UIResText(Label, new Point((int)res.Width - safe.X - 180, (int)res.Height - safe.Y - (30 + (4 * interval))), 0.3f, Color.White, Font.ChaletLondon, Alignment.Right).Draw();
+            new Sprite("timerbars", "all_black_bg", new Size(300, 37), new Point((int)res.Width - safe.X - 298, (int)res.Height - safe.Y - (40 + (4 * interval))), Color.FromArgb(180, 255, 255, 255)).Draw();
 
-            UI.HideHudComponentThisFrame(HudComponent.AreaName);
-            UI.HideHudComponentThisFrame(HudComponent.StreetName);
-            UI.HideHudComponentThisFrame(HudComponent.VehicleName);
+            // TODO
+            /*HideHudComponentThisFrame(GTA.UI.HudComponent.AreaName);
+            UI.HideHudComponentThisFrame(GTA.UI.HudComponent.StreetName);
+            UI.HideHudComponentThisFrame(GTA.UI.HudComponent.VehicleName);*/
         }
     }
 
@@ -43,7 +45,7 @@ namespace NativeUI
             Point safe = UIMenu.GetSafezoneBounds();
 
             base.Draw(interval);
-            new UIResText(Text, new Point((int)res.Width - safe.X - 10, (int)res.Height - safe.Y - (42 + (4 * interval))), 0.5f, Color.White, Font.ChaletLondon, UIResText.Alignment.Right).Draw();
+            new UIResText(Text, new Point((int)res.Width - safe.X - 10, (int)res.Height - safe.Y - (42 + (4 * interval))), 0.5f, Color.White, Font.ChaletLondon, Alignment.Right).Draw();
         }
     }
 

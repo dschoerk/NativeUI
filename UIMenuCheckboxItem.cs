@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using GTA.UI;
 
 namespace NativeUI
 {          
@@ -32,7 +33,7 @@ namespace NativeUI
             : base(text, description)
         {
             const int y = 0;
-            _checkedSprite = new Sprite("commonmenu", "shop_box_blank", new Point(410, y + 95), new Size(50, 50));
+            _checkedSprite = new Sprite("commonmenu", "shop_box_blank", new SizeF(50, 50), new PointF(410, y + 95));
             Checked = check;
         }
 
@@ -60,14 +61,14 @@ namespace NativeUI
         public override void Draw()
         {
             base.Draw();
-            _checkedSprite.Position = _checkedSprite.Position = new Point(380 + Offset.X + Parent.WidthOffset, _checkedSprite.Position.Y);
+            _checkedSprite.Position = _checkedSprite.Position = new PointF(380 + Offset.X + Parent.WidthOffset, _checkedSprite.Position.Y);
             if (Selected)
             {
-                _checkedSprite.TextureName = Checked ? "shop_box_tickb" : "shop_box_blankb";
+                // TODO _checkedSprite.TextureName = Checked ? "shop_box_tickb" : "shop_box_blankb";
             }
             else
             {
-                _checkedSprite.TextureName = Checked ? "shop_box_tick" : "shop_box_blank";
+                // TODO _checkedSprite.TextureName = Checked ? "shop_box_tick" : "shop_box_blank";
             }
             _checkedSprite.Draw();
         }

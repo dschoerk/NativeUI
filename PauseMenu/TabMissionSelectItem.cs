@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using GTA;
 using GTA.Native;
-using Font = GTA.Font;
+using Font = GTA.UI.Font;
+using GTA.UI;
 
 namespace NativeUI.PauseMenu
 {
@@ -66,7 +67,7 @@ namespace NativeUI.PauseMenu
             base.FadeInWhenFocused = true;
             base.DrawBg = false;
 
-            _noLogo = new Sprite("gtav_online", "rockstarlogo256", new Point(), new Size(512, 256));
+            _noLogo = new Sprite("gtav_online", "rockstarlogo256", new Size(512, 256), new Point());
             _maxItem = MaxItemsPerView;
             _minItem = 0;
 
@@ -173,12 +174,13 @@ namespace NativeUI.PauseMenu
             else if (Heists[Index].Logo != null && Heists[Index].Logo.FileName != null && !Heists[Index].Logo.IsGameTexture)
             {
                 var target = Heists[Index].Logo.FileName;
-                Sprite.DrawTexture(target, new Point((int)res.Width - SafeSize.X - 512, SafeSize.Y), new Size(512, 256));
+
+                // TODO Sprite.DrawTexture(target, new Size(512, 256), new Point((int)res.Width - SafeSize.X - 512, SafeSize.Y));
             }
             else if (Heists[Index].Logo != null && Heists[Index].Logo.FileName != null &&
                      Heists[Index].Logo.IsGameTexture)
             {
-                var newLogo = new Sprite(Heists[Index].Logo.DictionaryName, Heists[Index].Logo.FileName, new Point(), new Size(512, 256));
+                var newLogo = new Sprite(Heists[Index].Logo.DictionaryName, Heists[Index].Logo.FileName, new Size(512, 256), new Point());
                 newLogo.Position = new Point((int)res.Width - SafeSize.X - 512, SafeSize.Y);
                 newLogo.Color = Color.FromArgb(blackAlpha, 0, 0, 0);
                 newLogo.Draw();
@@ -186,7 +188,7 @@ namespace NativeUI.PauseMenu
 
             new UIResRectangle(new Point((int)res.Width - SafeSize.X - 512, SafeSize.Y + 256), new Size(512, 40), Color.FromArgb(fullAlpha, Color.Black)).Draw();
             new UIResText(Heists[Index].Name, new Point((int)res.Width - SafeSize.X - 4, SafeSize.Y + 260), 0.5f, Color.FromArgb(fullAlpha, Color.White),
-                Font.HouseScript, UIResText.Alignment.Right).Draw();
+                Font.HouseScript, Alignment.Right).Draw();
 
             for (int i = 0; i < Heists[Index].ValueList.Count; i++)
             {
@@ -197,7 +199,7 @@ namespace NativeUI.PauseMenu
 
 
                 new UIResText(text, new Point((int)res.Width - SafeSize.X - 506, SafeSize.Y + 260 + 42 + (40 * i)), 0.35f, Color.FromArgb(fullAlpha, Color.White)).Draw();
-                new UIResText(label, new Point((int)res.Width - SafeSize.X - 6, SafeSize.Y + 260 + 42 + (40 * i)), 0.35f, Color.FromArgb(fullAlpha, Color.White), Font.ChaletLondon, UIResText.Alignment.Right).Draw();
+                new UIResText(label, new Point((int)res.Width - SafeSize.X - 6, SafeSize.Y + 260 + 42 + (40 * i)), 0.35f, Color.FromArgb(fullAlpha, Color.White), Font.ChaletLondon, Alignment.Right).Draw();
             }
 
             if (!string.IsNullOrEmpty(Heists[Index].Description))

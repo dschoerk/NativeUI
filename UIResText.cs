@@ -2,7 +2,9 @@
 using System.Drawing;
 using GTA;
 using GTA.Native;
-using Font = GTA.Font;
+using UIText = GTA.UI.Text;
+using GTA.UI;
+using Font = GTA.UI.Font;
 
 namespace NativeUI
 {
@@ -13,23 +15,23 @@ namespace NativeUI
     {
         public UIResText(string caption, Point position, float scale) : base(caption, position, scale)
         {
-            TextAlignment = Alignment.Left;
+            Alignment = GTA.UI.Alignment.Center;
         }
 
         public UIResText(string caption, Point position, float scale, Color color)
             : base(caption, position, scale, color)
         {
-            TextAlignment = Alignment.Left;
+            Alignment = GTA.UI.Alignment.Center;
         }
 
         public UIResText(string caption, Point position, float scale, Color color, Font font, Alignment justify)
-            : base(caption, position, scale, color, font, false)
+            : base(caption, position, scale, color, font, GTA.UI.Alignment.Center)
         {
-            TextAlignment = justify;
+            Alignment = justify;
         }
 
 
-        public Alignment TextAlignment { get; set; }
+        //public Alignment TextAlignment { get; set; }
         public bool DropShadow { get; set; } = false;
         public bool Outline { get; set; } = false;
 
@@ -37,21 +39,21 @@ namespace NativeUI
         /// Push a long string into the stack.
         /// </summary>
         /// <param name="str"></param>
-        public static void AddLongString(string str)
+        /*public static void AddLongString(string str)
         {
             const int strLen = 99;
             for (int i = 0; i < str.Length; i += strLen)
             {
                 string substr = str.Substring(i, Math.Min(strLen, str.Length - i));
-                Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, substr);
+                //Function.Call(Hash._ADD_TEXT_COMPONENT_ITEM_STRING, substr); // TODO _ADD_TEXT_COMPONENT_STRING
             }
         }
 
 
         public static float MeasureStringWidth(string str, Font font, float scale)
         {
-            int screenw = Game.ScreenResolution.Width;
-            int screenh = Game.ScreenResolution.Height;
+            float screenw = GTA.UI.Screen.Width;
+            float screenh = GTA.UI.Screen.Height;
             const float height = 1080f;
             float ratio = (float)screenw / screenh;
             float width = height * ratio;
@@ -64,13 +66,13 @@ namespace NativeUI
             AddLongString(str);
             return Function.Call<float>((Hash)0x85F061DA64ED2F67, (int)font) * scale;
         }
-
+        */
         public Size WordWrap { get; set; }
 
-        public override void Draw(Size offset)
+        /*public override void Draw(SizeF offset)
         {
-            int screenw = Game.ScreenResolution.Width;
-            int screenh = Game.ScreenResolution.Height;
+            float screenw = GTA.UI.Screen.Width;
+            float screenh = GTA.UI.Screen.Height;
             const float height = 1080f;
             float ratio = (float)screenw / screenh;
             var width = height * ratio;
@@ -87,7 +89,7 @@ namespace NativeUI
                 Function.Call(Hash.SET_TEXT_OUTLINE);
             switch (TextAlignment)
             {
-                case Alignment.Centered:
+                case Alignment.Center:
                     Function.Call(Hash.SET_TEXT_CENTRE, true);
                     break;
                 case Alignment.Right:
@@ -107,13 +109,13 @@ namespace NativeUI
             
 
             Function.Call(Hash._DRAW_TEXT, x, y);
-        }
+        }*/
 
-        public enum Alignment
+        /*public enum Alignment
         {
             Left,
             Centered,
             Right,
-        }
+        }*/
     }
 }
